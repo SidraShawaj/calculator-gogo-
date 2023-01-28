@@ -54,29 +54,29 @@ const validateInput = (value) => {
         case 'X':
         case 'Y':
         case 'Z':
-            if (variables.includes(equation.slice(-1))){
+            if(variables.includes(equation.slice(-1)) || equation.includes(value)){
                 return false;
             }
         default: return true;
     }
 } 
 
-const validateEquation = () => {
-    if(equation.indexOf('X') != -1) {
+const validateEquation = () => { 
+    if(equation.includes('X')) {
         if(xVal.value === '') {
             displayResults('Please enter a value for X.')
             return false;
         }
     }
 
-   if(equation.indexOf('Y') != -1) {
+   if(equation.includes('Y')) {
         if(yVal.value === '') {
             displayResults('Please enter a value for Y.')
             return false;
         }
     } 
  
-    if(equation.indexOf('Z') != -1) {
+    if(equation.includes('Z')) {
         if(zVal.value === '') {
             displayResults('Please enter a value for Z.')
             return false; 
