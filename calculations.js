@@ -1,72 +1,82 @@
 const resultsEditor = document.querySelector('.results-display');
 const equationEditor = document.querySelector('.equation-display');
-const variableBtn = document.querySelectorAll('.variable');
-const numberBtn = document.querySelectorAll('.number');
-const operatorBtn = document.querySelectorAll('.operator');
-const deleteBtn = document.querySelector('.delete');
+const inputBtns = document.querySelectorAll('.cal-btn'); 
+const deleteBtn = document.querySelector('.delete')
 const clearBtn = document.querySelector('.clear');
 const equalsBtn = document.querySelector('.equal');
 const xVal = document.getElementById('x-val');
 const yVal = document.getElementById('y-val');
 const zVal = document.getElementById('z-val');
 
-// to store the operands and operator input from the user
-let currNum = '';
+let equation = '';
 
-const operatorList = [
+const operators = [
     '+',
     '-',
     '*',
     '/'
-]
-
-const variableList = [
+];
+const variables = [
     'X',
     'Y',
     'Z'
-]
+];
+const numbers = [
+    '0',
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+];
 
 const validateInput = (value) => {
     switch(value){
         case '0':
-            if(currNum === '' || operatorList.includes(currNum[-1])) {
+            if(equation === '' || operators.includes(equation[-1])) {
                 return false;
+            } else {
+                return true;
             }
-            else return true;
         case '+':
         case '-':
         case '*':
         case '/':
-            if(operatorList.includes(currNum.slice(-1))){
+            if(equation === '' || operators.includes(equation.slice(-1))){
                 return false;
+            } else {
+                return true;
             }
-            else return true;
         case 'X':
         case 'Y':
         case 'Z':
-            if (variableList.includes(currNum.slice(-1))){
+            if (variables.includes(equation.slice(-1))){
                 return false;
             }
         default: return true;
     }
-}
+} 
 
 const validateEquation = () => {
-    if(currNum.indexOf('X') != -1) {
+    if(equation.indexOf('X') != -1) {
         if(xVal.value === '') {
             displayResults('Please enter a value for X.')
             return false;
         }
     }
 
-   if(currNum.indexOf('Y') != -1) {
+   if(equation.indexOf('Y') != -1) {
         if(yVal.value === '') {
             displayResults('Please enter a value for Y.')
             return false;
         }
     } 
  
-    if(currNum.indexOf('Z') != -1) {
+    if(equation.indexOf('Z') != -1) {
         if(zVal.value === '') {
             displayResults('Please enter a value for Z.')
             return false; 
@@ -74,82 +84,63 @@ const validateEquation = () => {
     }
     
     return true; 
-
 }
 
-//store the input number
-const input = (character) => { 
-    if(variableList.includes(character)){
-        if(!operatorList.includes(currNum.slice(-1)) && currNum !== ''){
-            currNum += '*' + character; 
-        }
-        else currNum += character;
+const appendEquation = (input) => {  
+    if(variables.includes(input) && numbers.includes(equation.slice(-1))){
+        equation += '*' + input; 
+    } 
+    else if(numbers.includes(input) && variables.includes(equation.slice(-1))){
+        equation += '*' + input; 
+    } else { 
+        equation += input; 
     }
-    else if(variableList.includes(currNum.slice(-1)) && !operatorList.includes(character)){
-        currNum += '*' + character; 
-    }
-    else currNum = currNum + character;
 }
 
-const displayEquation = () => {
-    equationEditor.innerText = currNum;
+const updateEquationDisplay = () => {
+    equationEditor.innerText = equation;
 }
 
 const displayResults = (results) => {
     resultsEditor.innerText = results;
 }
 
-numberBtn.forEach(btn => {
-    btn.addEventListener('click', () => {
-        if (validateInput(btn.innerText)) {
-            input(btn.innerText);
-        };
-       displayEquation();
-    });
-})
+const clear = () => {
+    equation = '';
+    xVal.value = '';
+    yVal.value = '';
+    zVal.value = '';
+    displayResults('');
+}
 
-operatorBtn.forEach(btn => {
+inputBtns.forEach(btn => {
     btn.addEventListener('click', () => {
+        if(resultsEditor.innerText !== ''){
+            clear();
+        } 
         if (validateInput(btn.innerText)) {
-            input(btn.innerText);
+            appendEquation(btn.innerText);
         };
-       displayEquation();
+       updateEquationDisplay();
     });
 })
 
 equalsBtn.addEventListener('click', () => {
     if (validateEquation()) {
-        console.log('witcher');
-        let newCurr = currNum.replace('X', xVal.value);
-        newCurr = newCurr.replace('Y', yVal.value);
-        newCurr = newCurr.replace('Z', zVal.value);
-        console.log(newCurr);
-        resultsEditor.innerText = eval(newCurr);
+        let finalEquation = equation.replace('X', xVal.value);
+        finalEquation = finalEquation.replace('Y', yVal.value);
+        finalEquation = finalEquation.replace('Z', zVal.value);
+
+        resultsEditor.innerText = eval(finalEquation);
     }  
 })
 
 deleteBtn.addEventListener('click', () => {
-    currNum = currNum.slice(0,-1)
-    displayEquation();
+    equation = equation.slice(0,-1)
+    updateEquationDisplay();
 })
 
 clearBtn.addEventListener('click', () => {
-    currNum = '';
-    xVal.value = '';
-    yVal.value = '';
-    zVal.value = '';
-    displayEquation();
-    displayResults('');
+    clear();
+    updateEquationDisplay();
 })
-
-variableBtn.forEach(btn => {
-    btn.addEventListener('click', () => {
-        if (validateInput(btn.innerText)) {
-            input(btn.innerText); 
-        };
-       displayEquation();
-    });
-})
-
-
-
