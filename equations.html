@@ -9,49 +9,47 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="wrapper">
-        <div class="calculator">
-            <div class="cal-btns">
-                <button class="cal-btn number">0</button>
-                <button class="cal-btn number">1</button>
-                <button class="cal-btn number">2</button>
-                <button class="cal-btn number">3</button>
-                <button class="cal-btn number">4</button>
-                <button class="cal-btn number">5</button>
-                <button class="cal-btn number">6</button>
-                <button class="cal-btn number">7</button>
-                <button class="cal-btn number">8</button>
-                <button class="cal-btn number">9</button>
-                <button class="cal-btn operator">+</button>
-                <button class="cal-btn operator">-</button>
-                <button class="cal-btn operator">/</button>
-                <button class="cal-btn operator">*</button>
-                <button class="cal-btn variable">X</button>
-                <button class="cal-btn variable">Y</button>
-                <button class="cal-btn variable">Z</button>
-                <button class="special-cal-btn delete">Delete</button>
-                <button class="special-cal-btn clear">Clear</button>
+    <div class="calculator">
+        <div class="cal-btns">
+            <button class="cal-btn number">0</button>
+            <button class="cal-btn number">1</button>
+            <button class="cal-btn number">2</button>
+            <button class="cal-btn number">3</button>
+            <button class="cal-btn number">4</button>
+            <button class="cal-btn number">5</button>
+            <button class="cal-btn number">6</button>
+            <button class="cal-btn number">7</button>
+            <button class="cal-btn number">8</button>
+            <button class="cal-btn number">9</button>
+            <button class="cal-btn operator">+</button>
+            <button class="cal-btn operator">-</button>
+            <button class="cal-btn operator">/</button>
+            <button class="cal-btn operator">*</button>
+            <button class="cal-btn variable">X</button>
+            <button class="cal-btn variable">Y</button>
+            <button class="cal-btn variable">Z</button>
+            <button class="special-cal-btn delete">Delete</button>
+            <button class="special-cal-btn clear">Clear</button>
+        </div>
+        <div class="output">
+            <div class="equation">
+                <h3>The equation:</h3>
+                <div class="equation-display" aria-readonly="true"></div>
             </div>
-            <div class="output">
-                <div class="equation">
-                    <h3>The equation:</h3>
-                    <div class="eqation-display" aria-readonly="true">0</div>
-                </div>
-                <div class="variables">
-                    <h3>The variables:</h3>
-                    <div class="variables-editor">
-                        <textarea id="x-val" cols="30" rows="1" placeholder="Enter X Value"></textarea>
-                        <textarea id="y-val" cols="30" rows="1" placeholder="Enter Y Value"></textarea>
-                        <textarea id="z-val" cols="30" rows="1" placeholder="Enter Z Value"></textarea>
-                    </div>
+            <div class="variables">
+                <h3>The variables:</h3>
+                <div class="variables-editor">
+                    <input type="text" id="x-val" name="variable" minlength="1" placeholder="Enter X value">
+                    <input type="text" id="y-val" name="variable" minlength="1" placeholder="Enter Y value">
+                    <input type="text" id="z-val" name="variable" minlength="1" placeholder="Enter Z value">
                 </div>
             </div>
-            <button class="equal">=</button>
-            <div class="results">
-                <h3>The result =</h3>
-                <div class="results-display">res</div>
-            </div>
+        </div>
+        <button class="equal">=</button>
+        <div class="results">
+            <h3>The result =</h3>
+            <div class="results-display"></div>
         </div>
     </div>
 </body>
-</html>
+</html> 

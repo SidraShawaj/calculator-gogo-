@@ -1,5 +1,5 @@
 const resultsEditor = document.querySelector('.results-display');
-const equationEditor = document.querySelector('.eqation-display');
+const equationEditor = document.querySelector('.equation-display');
 const variableBtn = document.querySelectorAll('.variable');
 const numberBtn = document.querySelectorAll('.number');
 const operatorBtn = document.querySelectorAll('.operator');
@@ -12,9 +12,6 @@ const zVal = document.getElementById('z-val');
 
 // to store the operands and operator input from the user
 let currNum = '';
-let x = '', 
-y = '',
-z = '';
 
 const operatorList = [
     '+',
@@ -47,13 +44,37 @@ const validateInput = (value) => {
         case 'X':
         case 'Y':
         case 'Z':
-            console.log(value);
-            console.log(currNum);
             if (variableList.includes(currNum.slice(-1))){
                 return false;
             }
         default: return true;
     }
+}
+
+const validateEquation = () => {
+    if(currNum.indexOf('X') != -1) {
+        if(xVal.value === '') {
+            displayResults('Please enter a value for X.')
+            return false;
+        }
+    }
+
+   if(currNum.indexOf('Y') != -1) {
+        if(yVal.value === '') {
+            displayResults('Please enter a value for Y.')
+            return false;
+        }
+    } 
+ 
+    if(currNum.indexOf('Z') != -1) {
+        if(zVal.value === '') {
+            displayResults('Please enter a value for Z.')
+            return false; 
+        }
+    }
+    
+    return true; 
+
 }
 
 //store the input number
@@ -64,7 +85,7 @@ const input = (character) => {
         }
         else currNum += character;
     }
-    else if(variableList.includes(currNum.slice(-1))){
+    else if(variableList.includes(currNum.slice(-1)) && !operatorList.includes(character)){
         currNum += '*' + character; 
     }
     else currNum = currNum + character;
@@ -96,11 +117,15 @@ operatorBtn.forEach(btn => {
     });
 })
 
-equalsBtn.addEventListener('click', () => {  
-    let newCurr = currNum.replace('X', xVal.value);
-    newCurr = newCurr.replace('Y', yVal.value);
-    newCurr = newCurr.replace('Z', zVal.value);
-    resultsEditor.innerText = eval(newCurr);
+equalsBtn.addEventListener('click', () => {
+    if (validateEquation()) {
+        console.log('witcher');
+        let newCurr = currNum.replace('X', xVal.value);
+        newCurr = newCurr.replace('Y', yVal.value);
+        newCurr = newCurr.replace('Z', zVal.value);
+        console.log(newCurr);
+        resultsEditor.innerText = eval(newCurr);
+    }  
 })
 
 deleteBtn.addEventListener('click', () => {
